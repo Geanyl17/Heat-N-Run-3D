@@ -371,6 +371,10 @@
 "Assets/Scripts/WeaponPickup.cs"
 "Assets/Scripts/WeaponSwitchHandler.cs"
 "Assets/Scripts/WeaponSwitching.cs"
+"Assets/status effects script/BlindScript.cs"
+"Assets/status effects script/FireStatus.cs"
+"Assets/status effects script/PoisonStatus.cs"
+"Assets/status effects script/SlowStatujs.cs"
 -langversion:9.0
 
 /deterministic
