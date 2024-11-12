@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAiTutorial : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class EnemyAiTutorial : MonoBehaviour
     // States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    public Slider healthSlider;
+    public GameObject healthBarUI;
+
 
     private void Awake()
     {
@@ -105,13 +110,28 @@ public class EnemyAiTutorial : MonoBehaviour
     {
         health -= damage;
 
+        if (healthBarUI != null && !healthBarUI.activeSelf)
+        {
+            healthBarUI.SetActive(true);
+        }
+
+        if (healthSlider !=null)
+        {
+            healthSlider.value = health;
+        }
+
         if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
 
     private void DestroyEnemy()
     {
+        if (healthBarUI != null)
+        {
+            healthBarUI.SetActive(false);
+        }
         Destroy(gameObject);
     }
+
 
     private void OnDrawGizmosSelected()
     {

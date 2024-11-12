@@ -375,6 +375,7 @@
 "Assets/status effects script/FireStatus.cs"
 "Assets/status effects script/PoisonStatus.cs"
 "Assets/status effects script/SlowStatujs.cs"
+"Assets/TeleportScript.cs"
 -langversion:9.0
 
 /deterministic

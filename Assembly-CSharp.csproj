@@ -70,6 +70,7 @@
     <Compile Include="Assets\status effects script\BlindScript.cs" />
     <Compile Include="Assets\Scripts\WeaponSwitchHandler.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
+    <Compile Include="Assets\TeleportScript.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\status effects script\SlowStatujs.cs" />
