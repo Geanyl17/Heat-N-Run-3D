@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\GunProjectile.cs" />
     <Compile Include="Assets\WeaponAmmoManager.cs" />
+    <Compile Include="Assets\CameraFulstrumLoader.cs" />
     <Compile Include="Assets\Scripts\TeleportScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\PickUpController.cs" />
