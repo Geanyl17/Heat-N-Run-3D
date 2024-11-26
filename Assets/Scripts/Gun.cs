@@ -17,6 +17,15 @@ public class Gun : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // If the fpsCam is not assigned in the inspector, automatically set it to the Main Camera
+        if (fpsCam == null)
+        {
+            fpsCam = Camera.main;
+        }
+    }
+
     void Shoot()
     {
         RaycastHit hit;

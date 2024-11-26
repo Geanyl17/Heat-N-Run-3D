@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
 
     private bool canMove = true;
+    public Inventory inventory;
 
     void Start()
     {
@@ -77,5 +78,18 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+        
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        IInventoryItem item = hit.collider.GetComponent<IInventoryItem>();
+        if (item != null)
+        {
+            Debug.Log("Item detected: " + item.Name); // Debug Log
+            inventory.AddItem(item);                 // Add to inventory
+        }
+    }
+
 }

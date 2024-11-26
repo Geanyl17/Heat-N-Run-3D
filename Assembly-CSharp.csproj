@@ -66,17 +66,21 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\WeaponPickup.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
+    <Compile Include="Assets\HUD.cs" />
     <Compile Include="Assets\Scripts\EnemyAi.cs" />
     <Compile Include="Assets\status effects script\BlindScript.cs" />
+    <Compile Include="Assets\Rifle.cs" />
+    <Compile Include="Assets\Inventory.cs" />
     <Compile Include="Assets\Scripts\WeaponSwitchHandler.cs" />
+    <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
-    <Compile Include="Assets\TeleportScript.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
+    <Compile Include="Assets\watergun.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\status effects script\SlowStatujs.cs" />
     <Compile Include="Assets\Scripts\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\GunProjectile.cs" />
-    <Compile Include="Assets\Scripts\WaterGun.cs" />
+    <Compile Include="Assets\Scripts\TeleportScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\PickUpController.cs" />
     <Compile Include="Assets\status effects script\FireStatus.cs" />
