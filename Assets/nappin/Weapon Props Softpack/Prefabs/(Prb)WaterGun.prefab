@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306646043447287838}
-  - component: {fileID: 407663733076691029}
+  - component: {fileID: 979631038075390212}
   m_Layer: 0
   m_Name: waterGun
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 77670090083427710}
   m_Father: {fileID: 5366037596873727029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &407663733076691029
+--- !u!114 &979631038075390212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,6 +50,10 @@ MonoBehaviour:
   damage: 10
   range: 100
   fpsCam: {fileID: 0}
+  maxAmmo: 30
+  currentAmmo: 0
+  ammoPerShot: 1
+  reloadTime: 2
 --- !u!1 &1204026403058092727
 GameObject:
   m_ObjectHideFlags: 0

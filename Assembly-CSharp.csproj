@@ -71,6 +71,7 @@
     <Compile Include="Assets\status effects script\BlindScript.cs" />
     <Compile Include="Assets\Rifle.cs" />
     <Compile Include="Assets\Inventory.cs" />
+    <Compile Include="Assets\AmmoPickup.cs" />
     <Compile Include="Assets\Scripts\WeaponSwitchHandler.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\status effects script\SlowStatujs.cs" />
     <Compile Include="Assets\Scripts\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\GunProjectile.cs" />
+    <Compile Include="Assets\WeaponAmmoManager.cs" />
     <Compile Include="Assets\Scripts\TeleportScript.cs" />
     <Compile Include="Assets\Scripts\ProjectileDamage.cs" />
     <Compile Include="Assets\Scripts\PickUpController.cs" />

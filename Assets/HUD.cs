@@ -10,6 +10,8 @@ public class HUD : MonoBehaviour
     public Color defaultBorderColor = Color.white;
 
     private GameObject currentWeapon; // Track the current weapon object
+    private Dictionary<string, GameObject> weaponInstances = new Dictionary<string, GameObject>(); // Track instantiated weapons by name
+    public AmmoUIManager ammoUIManager; // Reference to AmmoUIManager to update ammo UI
 
     void Start()
     {
@@ -42,7 +44,7 @@ public class HUD : MonoBehaviour
             }
         }
 
-        // Instantiate and attach the weapon when added
+        // Instantiate and attach the weapon to player when it's added to the inventory
         AttachWeaponToPlayer(e.Item);
     }
 
@@ -80,54 +82,56 @@ public class HUD : MonoBehaviour
         SwitchWeapon(e.Item);
     }
 
-   private void AttachWeaponToPlayer(IInventoryItem item)
-{
-    GameObject weaponPrefab = item.GetWeaponPrefab(); // Get the weapon prefab
-
-    if (weaponPrefab != null)
+    private void AttachWeaponToPlayer(IInventoryItem item)
     {
-        // Destroy the current weapon if it exists
-        if (currentWeapon != null)
+        GameObject weaponPrefab = item.GetWeaponPrefab(); // Get the weapon prefab
+
+        if (weaponPrefab != null)
         {
-            Destroy(currentWeapon);
-        }
+            // Check if the weapon is already instantiated (using name as key)
+            if (!weaponInstances.ContainsKey(weaponPrefab.name))
+            {
+                // Instantiate the weapon and store it in the dictionary
+                GameObject weaponInstance = Instantiate(weaponPrefab);
 
-        // Instantiate the new weapon and attach it to the camera's child object
-        currentWeapon = Instantiate(weaponPrefab);
+                // Parent the weapon to the 'weaponHolder' child of the main camera
+                Transform weaponHolder = Camera.main.transform.Find("WeaponHolder");
 
-        // Find the child object in the camera (e.g., an empty GameObject called "WeaponHolder")
-        Transform weaponHolder = Camera.main.transform.Find("WeaponHolder");
+                if (weaponHolder != null)
+                {
+                    weaponInstance.transform.SetParent(weaponHolder);
+                }
 
-        if (weaponHolder != null)
-        {
-            // Attach the weapon to the WeaponHolder (child of the camera)
-            currentWeapon.transform.SetParent(weaponHolder);
+                // Position and rotate the weapon correctly
+                weaponInstance.transform.localPosition = Vector3.zero; // Adjust position as needed
+                weaponInstance.transform.localRotation = Quaternion.identity; // Adjust rotation as needed
 
-            // Position the weapon in front of the camera with an offset
-            Vector3 weaponOffset = new Vector3(0.5f, -0.2f, 1f); // Example offset
-            currentWeapon.transform.localPosition = weaponOffset;
+                // Store the instantiated weapon in the dictionary
+                weaponInstances[weaponPrefab.name] = weaponInstance;
+            }
 
-            // Reset the weapon's rotation to ensure consistent orientation
-            currentWeapon.transform.localRotation = Quaternion.Euler(0, 0, 0); // Or match the camera's rotation
-        }
-        else
-        {
-            Debug.LogError("WeaponHolder child object not found!");
+            // Deactivate all weapons
+            foreach (var weapon in weaponInstances.Values)
+            {
+                weapon.SetActive(false);
+            }
+
+            // Activate the selected weapon
+            GameObject selectedWeapon = weaponInstances[weaponPrefab.name];
+            selectedWeapon.SetActive(true);
+            currentWeapon = selectedWeapon;
+
+            // Update Ammo UI for the new weapon
+            if (ammoUIManager != null)
+            {
+                ammoUIManager.SetCurrentWeapon(selectedWeapon.GetComponent<Gun>());
+            }
         }
     }
-}
-
-
 
     private void SwitchWeapon(IInventoryItem item)
     {
-        // Destroy the current weapon if it's instantiated
-        if (currentWeapon != null)
-        {
-            Destroy(currentWeapon);
-        }
-
-        // Instantiate the new weapon
+        // Switch the weapon based on the selected item
         AttachWeaponToPlayer(item);
     }
 }
