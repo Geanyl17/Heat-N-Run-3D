@@ -59,7 +59,7 @@
     <UnityVersion>2022.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\User\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.0.4\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\User\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.0.5\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.20f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.20f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -71,15 +71,18 @@
     <Compile Include="Assets\status effects script\BlindScript.cs" />
     <Compile Include="Assets\Rifle.cs" />
     <Compile Include="Assets\Inventory.cs" />
+    <Compile Include="Assets\BossAi.cs" />
     <Compile Include="Assets\AmmoPickup.cs" />
     <Compile Include="Assets\Scripts\WeaponSwitchHandler.cs" />
     <Compile Include="Assets\InventoryItem.cs" />
+    <Compile Include="Assets\IWeapon.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\watergun.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\status effects script\SlowStatujs.cs" />
     <Compile Include="Assets\Scripts\EnemyProjectile.cs" />
+    <Compile Include="Assets\WaterHoseGun.cs" />
     <Compile Include="Assets\Scripts\GunProjectile.cs" />
     <Compile Include="Assets\WeaponAmmoManager.cs" />
     <Compile Include="Assets\CameraFulstrumLoader.cs" />
@@ -108,6 +111,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Polygonal Particles\Assets\Shaders\GradientBackgroundShader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />

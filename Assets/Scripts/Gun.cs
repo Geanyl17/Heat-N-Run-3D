@@ -11,7 +11,7 @@ public class Gun : MonoBehaviour
 
     public AmmoUIManager ammoUIManager; // Reference to the AmmoUIManager to update UI
 
-    void Start()
+    public void Start()
     {
         currentAmmo = maxAmmo; // Set initial ammo to max ammo
         if (ammoUIManager != null)
@@ -24,17 +24,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Update()
     {
         if (Input.GetButtonDown("Fire1") && currentAmmo > 0)
         {
             Shoot();
-        }
-
-        // Reload ammo when pressing the reload key (e.g., R)
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Reload();
         }
     }
 
@@ -53,16 +47,20 @@ public class Gun : MonoBehaviour
             {
                 Debug.Log(hit.transform.name);
 
-                // Check if the hit object has the EnemyAiTutorial component
                 EnemyAiTutorial enemy = hit.transform.GetComponent<EnemyAiTutorial>();
+                BossAi boss = hit.transform.GetComponent<BossAi>();
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage); // Call TakeDamage on the enemy
                     Debug.Log("Hit enemy and dealt damage!");
                 }
+                else if (boss != null)
+                {
+                    boss.TakeDamage(damage);
+                    Debug.Log("Hit enemy and dealt damage!");
+                }
                 else
                 {
-                    // Check for target
                     Target target = hit.transform.GetComponent<Target>();
                     if (target != null)
                     {
@@ -77,15 +75,6 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Reload()
-    {
-        currentAmmo = ammoPerReload;
-        if (ammoUIManager != null)
-        {
-            ammoUIManager.UpdateAmmoDisplay(currentAmmo, maxAmmo); // Update ammo UI after reload
-        }
-        Debug.Log("Reloading...");
-    }
 
     public void ReplenishAmmo(int amount)
     {
