@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public Inventory inventory;
-    public Color selectedBorderColor = Color.green;
-    public Color defaultBorderColor = Color.white;
+    public Color selectedBorderColor = new Color(0f, 0f, 0f, 86f); // Transparent white
+    public Color defaultBorderColor = new Color(1f, 1f, 1f, 125f); // Transparent white
+
 
     private GameObject currentWeapon; // Track the current weapon object
     private Dictionary<string, GameObject> weaponInstances = new Dictionary<string, GameObject>(); // Track instantiated weapons by name
@@ -70,7 +71,7 @@ public class HUD : MonoBehaviour
 
             if (border != null && slotIndex == inventory.Items.IndexOf(e.Item))
             {
-                border.color = selectedBorderColor;
+                border.color = selectedBorderColor;  // Use the selected color set in the Inspector
                 break;
             }
         }

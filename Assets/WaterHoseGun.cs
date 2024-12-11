@@ -4,7 +4,7 @@ using UnityEngine;
 public class WaterHoseGun : Gun
 {
     public GameObject waterSprayPrefab; // Prefab reference
-    private ParticleSystem waterSprayEffect; // Particle system instance
+    public ParticleSystem waterSprayEffect; // Particle system instance
 
     public float damageInterval = 0.2f; // Time interval between damage applications
     public float damageAmount = 10f;   // Damage amount
@@ -42,6 +42,8 @@ public class WaterHoseGun : Gun
                     waterSprayEffect.Play();
                 }
                 damageCoroutine = StartCoroutine(ApplyDamageOverTime());
+
+
             }
         }
         else

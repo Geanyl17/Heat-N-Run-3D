@@ -20,8 +20,9 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
 
-    private bool canMove = true;
+    private bool canMove = true; // Control whether the player can move or not
     public Inventory inventory;
+    public Animator animator;
 
     void Start()
     {
@@ -32,17 +33,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!canMove)
+            return; // Skip the rest of the update if the player cannot move
+
+        // Player movement code
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical");
+        float curSpeedY = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal");
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+        bool isWalking = (curSpeedX != 0 || curSpeedY != 0) && characterController.isGrounded;
+        bool isCurrentlyRunning = isWalking && isRunning;
+
+        animator.SetBool("isWalking", isWalking);        
+        animator.SetBool("isRunning", isCurrentlyRunning);
+
+        if (Input.GetButton("Jump") && characterController.isGrounded)
         {
+            animator.SetBool("isJumping", true);
             moveDirection.y = jumpPower;
         }
         else
@@ -52,15 +64,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (!characterController.isGrounded)
         {
+            animator.SetBool("isJumping", false);
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.C) && canMove)
+        if (Input.GetKey(KeyCode.C))
         {
             characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
-
         }
         else
         {
@@ -71,15 +83,11 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
-        {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
-
-        
+        // Camera rotation code (look around)
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -92,4 +100,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Public method to control whether the player can move
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
+
+        // If we disable movement, we also need to unlock the cursor
+        if (!canMove)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
 }

@@ -29,6 +29,7 @@ public class EnemyAiTutorial : MonoBehaviour
     public Slider healthSlider;
     public GameObject healthBarUI;
 
+    public Animator animator;
 
     private void Awake()
     {
@@ -42,9 +43,18 @@ public class EnemyAiTutorial : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            Patroling();
+        }
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            ChasePlayer();
+        }
+        if (playerInAttackRange && playerInSightRange)
+        {
+            AttackPlayer();
+        }
     }
 
     private void Patroling()
@@ -52,13 +62,19 @@ public class EnemyAiTutorial : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
+            animator.SetBool("isWalking", true); // Set walking animation
+        }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         // Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+        {
             walkPointSet = false;
+            animator.SetBool("isWalking", false); // Stop walking animation
+        }
     }
 
     private void SearchWalkPoint()
@@ -76,30 +92,47 @@ public class EnemyAiTutorial : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        animator.SetBool("isWalking", true); // Set walking animation
     }
 
     private void AttackPlayer()
     {
-        // Make sure enemy doesn't move
+        // Stop the enemy from moving
         agent.SetDestination(transform.position);
+        animator.SetBool("isWalking", false); // Stop walking animation
 
-        transform.LookAt(player);
+        // Make the enemy face the player
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
 
         if (!alreadyAttacked)
         {
-            // Attack code here
-            GameObject projectileInstance = Instantiate(projectile, transform.position + transform.forward * 2f, Quaternion.identity);
-            Rigidbody rb = projectileInstance.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-                rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            }
-
+            animator.SetTrigger("isShooting"); // Trigger shooting animation
+            ShootProjectile();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
+
+    private void ShootProjectile()
+    {
+        // Calculate the direction to the player
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+        // Adjust projectile spawn position to match enemy's aiming point
+        Vector3 spawnPosition = transform.position + directionToPlayer * 2f + Vector3.up * 1.5f;
+
+        // Spawn the projectile
+        GameObject projectileInstance = Instantiate(projectile, spawnPosition, Quaternion.LookRotation(directionToPlayer));
+
+        // Apply force to the projectile to shoot it toward the player
+        Rigidbody rb = projectileInstance.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            float projectileSpeed = 32f; // Define the speed
+            rb.velocity = directionToPlayer * projectileSpeed;
+        }
+    }
+
 
     private void ResetAttack()
     {
@@ -115,7 +148,7 @@ public class EnemyAiTutorial : MonoBehaviour
             healthBarUI.SetActive(true);
         }
 
-        if (healthSlider !=null)
+        if (healthSlider != null)
         {
             healthSlider.value = health;
         }
@@ -131,7 +164,6 @@ public class EnemyAiTutorial : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
 
     private void OnDrawGizmosSelected()
     {

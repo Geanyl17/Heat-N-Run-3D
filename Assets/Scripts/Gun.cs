@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
     public float damage = 10f;
     public float range = 100f;
     public Camera fpsCam;
-
+    public ParticleSystem splash;
     public AmmoUIManager ammoUIManager; // Reference to the AmmoUIManager to update UI
 
     public void Start()
@@ -64,6 +64,7 @@ public class Gun : MonoBehaviour
                     Target target = hit.transform.GetComponent<Target>();
                     if (target != null)
                     {
+                        //splash = splash.p
                         target.TakeDamage(damage);    
                     }
                 }

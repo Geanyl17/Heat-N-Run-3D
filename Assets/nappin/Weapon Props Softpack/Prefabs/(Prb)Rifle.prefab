@@ -290,12 +290,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2df60e0ff072a994ca712e7440d374be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 100
+  maxAmmo: 10
   currentAmmo: 0
-  ammoPerReload: 30
-  damage: 10
+  ammoPerReload: 0
+  damage: 100
   range: 100
   fpsCam: {fileID: 0}
+  splash: {fileID: 0}
   ammoUIManager: {fileID: 0}
 --- !u!1 &6573889385294694977
 GameObject:
